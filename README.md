@@ -1,49 +1,55 @@
-# G03_Greed_PacMan_Knapsack
+# Greed_G3_Pac-Man
 
-**Conteúdo da Disciplina**: Greed
+**Conteúdo da Disciplina**: Algoritmos Ambiciosos
 
 ## Alunos
 |Matrícula | Aluno |
 | -- | -- |
-| 22/1008033  |  Fernando Gabriel Dos Santos Carrijo |
 | 20/0035703  |  Breno Alexandre Soares Garcia |
+| 22/1008033  |  Fernando Gabriel Dos Santos Carrijo |
 
 ## Sobre
 O projeto **Greed_G3_Pac-Man** é uma simulação com interface gráfica inspirada no Pac-Man, adaptada para aplicar uma estratégia gulosa baseada no problema da **Mochila (Knapsack)**.
 
-O mapa do jogo é representado como um grid navegável, onde o jogador deve escolher quais itens coletar antes que sua energia acabe. Cada item possui uma pontuação e um custo associado ao deslocamento necessário para alcançá-lo. Assim, o desafio passa a ser maximizar a pontuação coletada respeitando uma capacidade limitada de movimentos ou energia.
+No jogo, o Pac-Man possui uma quantidade limitada de energia e precisa decidir quais itens coletar no mapa. Cada item possui uma pontuação, e o custo para coletá-lo é calculado pela distância mínima entre a posição atual do jogador e a posição do item. A escolha gulosa prioriza o item com a melhor relação entre pontuação e custo.
 
 O projeto possui dois modos de uso:
 * **Modo manual:** o jogador controla o Pac-Man com as setas ou teclas WASD.
 * **Modo automático:** o algoritmo guloso escolhe os itens com maior razão `valor / custo`.
 
 Na modelagem do problema:
+* **Jogador:** representa o Pac-Man, indicado por `P`.
 * **Mapa:** representa o ambiente navegável em formato de grid.
-* **Posições:** representam células livres, paredes, itens e a posição atual do jogador.
-* **Itens:** representam pontos, frutas e power-ups disponíveis para coleta.
+* **Paredes:** bloqueiam a movimentação, indicadas por `#`.
+* **Itens:** representam pontos, frutas, power-ups e cerejas.
 * **Valor:** representa a pontuação obtida ao coletar um item.
-* **Peso/Custo:** representa a energia ou quantidade de movimentos necessária para alcançar o item.
-* **Capacidade:** representa o limite de energia disponível para o jogador.
-
-O sistema utiliza uma abordagem gulosa para escolher os itens mais vantajosos com base na razão entre valor e custo:
-* **Valor:** pontuação do item.
-* **Custo:** distância até o item ou energia necessária para coletá-lo.
-* **Critério guloso:** priorizar itens com maior relação `valor / custo`.
-
-## Objetivo
-Aplicar o conceito de algoritmos gulosos por meio de uma simulação interativa, mostrando como uma estratégia baseada em **Knapsack** pode decidir quais itens devem ser coletados para maximizar a pontuação dentro de um limite de energia.
+* **Custo:** representa a energia gasta para chegar até o item.
+* **Capacidade:** representa a energia total disponível para o Pac-Man.
 
 ## Técnica Utilizada
 **Knapsack com estratégia gulosa**
 
-A cada rodada, o algoritmo avalia os itens ainda disponíveis no mapa e escolhe aquele que apresenta a melhor razão entre pontuação e custo de deslocamento. Caso o jogador ainda tenha energia suficiente para alcançar o item, ele é coletado e a energia restante é atualizada. O processo se repete até que não existam mais itens possíveis de serem coletados.
+O algoritmo avalia todos os itens ainda disponíveis e calcula, para cada um, a razão:
 
-Essa abordagem mantém a essência do Pac-Man, pois o jogador continua navegando pelo mapa e coletando itens, mas o foco técnico do trabalho passa a ser a tomada de decisão gulosa.
+```text
+valor / custo
+```
+
+Em seguida, seleciona o item com a maior razão, desde que o custo caiba na energia restante. Após cada coleta, a posição do Pac-Man, a pontuação e a energia restante são atualizadas. O processo continua até que não exista mais nenhum item alcançável dentro da energia disponível.
+
+Embora o custo seja obtido a partir de caminhos no grid, o foco do trabalho é a decisão gulosa: escolher o item mais vantajoso localmente para maximizar a pontuação dentro de uma capacidade limitada.
+
+## Itens do Mapa
+| Símbolo | Item | Pontuação |
+| -- | -- | -- |
+| `.` | Ponto comum | 10 |
+| `O` | Power-up | 30 |
+| `F` | Fruta | 50 |
+| `C` | Cereja | 80 |
 
 ## Funcionalidades
-* Representação do mapa em formato de grid.
-* Distribuição de pontos, frutas e power-ups pelo mapa.
-* Definição de energia máxima para o jogador.
+* Representação do mapa em terminal.
+* Energia limitada para o jogador.
 * Cálculo do custo de deslocamento até cada item.
 * Seleção gulosa por maior razão `valor / custo`.
 * Atualização da pontuação e da energia após cada coleta.
@@ -56,57 +62,75 @@ Essa abordagem mantém a essência do Pac-Man, pois o jogador continua navegando
 
 ## Vídeo
 
-Segue o vídeo feito pela dupla: [Link](https://www.youtube.com/watch?v=INSERIR_LINK_DO_VIDEO)
+Segue o vídeo feito pela dupla: [Link](Link)
 
 ## Screenshots
 
-![Execução principal](assets/print_1.png)
-> *Figura 1: Mapa em grid com jogador, paredes e itens coletáveis.*
+![Figura 1](assets/figura1.svg)
+> *Figura 1: Execução inicial com mapa, Pac-Man e itens coletáveis.*
 
-![Escolha gulosa](assets/print_2.png)
-> *Figura 2: Ordem de coleta definida pela razão valor/custo.*
+![Figura 2](assets/figura2.svg)
+> *Figura 2: Rodada da simulação mostrando a rota escolhida pela estratégia gulosa.*
 
-![Resultado final](assets/print_3.png)
-> *Figura 3: Pontuação obtida, energia restante e itens ignorados.*
+![Figura 3](assets/figura3.svg)
+> *Figura 3: Resultado final com pontuação, energia restante e itens ignorados.*
 
 ## Instalação
 **Linguagem**: `Python 3.8+`<br>
-**Framework/Biblioteca**: `Pygame`<br>
+**Framework**: `Nenhum (Terminal)`<br>
 
 **Pré-requisitos:**
-É necessário ter o Python instalado na máquina. Para executar a interface gráfica da simulação, instale também a biblioteca `pygame`.
+É necessário ter o Python instalado na máquina. O projeto não utiliza bibliotecas externas.
 
 **Passo a passo da instalação:**
 
 1. Clone este repositório:
 ```bash
-git clone https://github.com/projeto-de-algoritmos-2026/G03_Greed_PacMan_Knapsack
+git clone https://github.com/projeto-de-algoritmos-2026/Greed_G3_Pac-Man
 ```
 
 2. Acesse a pasta do projeto:
 ```bash
-cd G03_Greed_PacMan_Knapsack
+cd Greed_G3_Pac-Man
 ```
 
-3. Instale as dependências:
-```bash
-pip install pygame
-```
-
-4. Execute o projeto:
+3. Execute o projeto:
 ```bash
 python main.py
 ```
 
 ## Uso
-Ao iniciar a aplicação, o mapa será carregado com itens distribuídos pelo grid. O jogador começa com uma quantidade limitada de energia e o algoritmo guloso decide a sequência de itens a serem coletados.
+Ao executar o projeto, a simulação mostra o mapa inicial e inicia as rodadas de coleta.
 
-Cada item é avaliado pela relação entre sua pontuação e o custo para alcançá-lo. O jogador coleta os itens mais vantajosos enquanto houver energia suficiente.
+Em cada rodada, o algoritmo:
+* Calcula o custo para alcançar cada item disponível.
+* Calcula a razão `valor / custo`.
+* Escolhe o item com melhor custo-benefício.
+* Move o Pac-Man até o item.
+* Atualiza energia e pontuação.
 
-Ao final da execução, a aplicação mostra:
-* A ordem de coleta escolhida.
-* A pontuação total acumulada.
-* A energia utilizada.
-* Os itens que não puderam ser coletados.
+Exemplo de execução:
 
-Essa proposta combina a temática de jogo com a aplicação prática de uma técnica gulosa, mantendo uma visualização simples e intuitiva do processo de decisão.
+```bash
+python main.py
+```
+
+Para executar os testes:
+
+```bash
+python -m unittest discover
+```
+
+## Estrutura do Projeto
+```text
+.
+├── main.py
+├── src
+│   ├── game.py
+│   ├── greedy.py
+│   ├── grid.py
+│   ├── maps.py
+│   └── models.py
+└── tests
+    └── test_greedy.py
+```
