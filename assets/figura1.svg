@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="560" viewBox="0 0 980 560">
+  <rect width="980" height="560" fill="#101820"/>
+  <rect x="28" y="28" width="630" height="462" fill="#0f1720" stroke="#1f2a36" stroke-width="2"/>
+  <rect x="682" y="28" width="270" height="462" fill="#18212c"/>
+  <text x="704" y="70" fill="#f8f8f2" font-family="Segoe UI, Arial" font-size="24" font-weight="700">Pac-Man Knapsack</text>
+  <text x="704" y="104" fill="#b8c2cc" font-family="Segoe UI, Arial" font-size="15">Automático: maior pontuação</text>
+  <text x="704" y="154" fill="#f8f8f2" font-family="Segoe UI, Arial" font-size="16">Modo: Manual</text>
+  <text x="704" y="184" fill="#f8f8f2" font-family="Segoe UI, Arial" font-size="16">Pontuação: 0</text>
+  <text x="704" y="214" fill="#f8f8f2" font-family="Segoe UI, Arial" font-size="16">Energia: 75/75</text>
+  <text x="704" y="244" fill="#f8f8f2" font-family="Segoe UI, Arial" font-size="16">Itens restantes: 9</text>
+  <rect x="704" y="292" width="218" height="34" rx="4" fill="#28394d"/>
+  <text x="748" y="315" fill="#f8f8f2" font-family="Segoe UI, Arial" font-size="15">Modo manual</text>
+  <rect x="704" y="336" width="218" height="34" rx="4" fill="#28394d"/>
+  <text x="748" y="359" fill="#f8f8f2" font-family="Segoe UI, Arial" font-size="15">Passe automático</text>
+  <rect x="704" y="380" width="218" height="34" rx="4" fill="#28394d"/>
+  <text x="748" y="403" fill="#f8f8f2" font-family="Segoe UI, Arial" font-size="15">Jogo automático</text>
+  <rect x="704" y="424" width="218" height="34" rx="4" fill="#28394d"/>
+  <text x="784" y="447" fill="#f8f8f2" font-family="Segoe UI, Arial" font-size="15">Resetar</text>
+  <text x="704" y="482" fill="#7bd88f" font-family="Segoe UI, Arial" font-size="14">Use setas ou WASD.</text>
+  <g transform="translate(28 28)">
+    <g fill="#214f93">
+      <rect x="0" y="0" width="630" height="42"/><rect x="0" y="420" width="630" height="42"/>
+      <rect x="0" y="0" width="42" height="462"/><rect x="588" y="0" width="42" height="462"/>
+      <rect x="168" y="42" width="42" height="42"/><rect x="84" y="84" width="42" height="42"/>
+      <rect x="168" y="84" width="42" height="42"/><rect x="294" y="84" width="126" height="42"/>
+      <rect x="462" y="84" width="126" height="42"/><rect x="84" y="126" width="42" height="42"/>
+      <rect x="252" y="126" width="42" height="42"/><rect x="420" y="126" width="42" height="42"/>
+      <rect x="84" y="168" width="126" height="42"/><rect x="252" y="168" width="42" height="42"/>
+      <rect x="336" y="168" width="42" height="42"/><rect x="420" y="168" width="42" height="42"/>
+      <rect x="504" y="168" width="42" height="42"/>
+    </g>
+    <circle cx="63" cy="63" r="16" fill="#ffd43b"/>
+    <polygon points="63,63 82,54 82,72" fill="#0f1720"/>
+    <circle cx="147" cy="63" r="4" fill="#f8f8f2"/>
+    <circle cx="357" cy="63" r="14" fill="#ff5c8a"/>
+    <text x="352" y="69" fill="#101820" font-family="Consolas" font-size="16" font-weight="700">F</text>
+    <circle cx="147" cy="231" r="14" fill="#66d9ef"/>
+    <text x="141" y="237" fill="#101820" font-family="Consolas" font-size="16" font-weight="700">O</text>
+    <circle cx="273" cy="399" r="14" fill="#bd7cff"/>
+    <text x="268" y="405" fill="#101820" font-family="Consolas" font-size="16" font-weight="700">C</text>
+  </g>
+</svg>
