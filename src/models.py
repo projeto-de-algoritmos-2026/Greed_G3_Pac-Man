@@ -33,3 +33,12 @@ class StepResult:
     energy_left: int
     score: int
     ratio: float
+
+
+@dataclass
+class ManualMoveResult:
+    moved: bool
+    position: Position
+    energy_left: int
+    score: int
+    collected_item: Item | None = None

@@ -9,9 +9,13 @@
 | 22/1008033  |  Fernando Gabriel Dos Santos Carrijo |
 
 ## Sobre
-O projeto **Greed_G3_Pac-Man** é uma simulação em terminal inspirada no Pac-Man, adaptada para aplicar uma estratégia gulosa baseada no problema da **Mochila (Knapsack)**.
+O projeto **Greed_G3_Pac-Man** é uma simulação com interface gráfica inspirada no Pac-Man, adaptada para aplicar uma estratégia gulosa baseada no problema da **Mochila (Knapsack)**.
 
 No jogo, o Pac-Man possui uma quantidade limitada de energia e precisa decidir quais itens coletar no mapa. Cada item possui uma pontuação, e o custo para coletá-lo é calculado pela distância mínima entre a posição atual do jogador e a posição do item. A escolha gulosa prioriza o item com a melhor relação entre pontuação e custo.
+
+O projeto possui dois modos de uso:
+* **Modo manual:** o jogador controla o Pac-Man com as setas ou teclas WASD.
+* **Modo automático:** o algoritmo guloso escolhe os itens com maior razão `valor / custo`.
 
 Na modelagem do problema:
 * **Jogador:** representa o Pac-Man, indicado por `P`.
@@ -52,6 +56,9 @@ Embora o custo seja obtido a partir de caminhos no grid, o foco do trabalho é a
 * Exibição da rota escolhida em cada rodada com `*`.
 * Relatório final com itens coletados, itens ignorados, energia usada e pontuação total.
 * Testes unitários para validação da lógica principal.
+* Interface gráfica com mapa colorido, painel de status e controles de execução.
+* Modo manual controlado por setas ou WASD.
+* Modo automático com execução passo a passo ou contínua.
 
 ## Vídeo
 

@@ -53,6 +53,42 @@ class GreedyKnapsackTest(unittest.TestCase):
         self.assertEqual(game.score, 0)
         self.assertEqual(len(game.remaining_items), 1)
 
+    def test_manual_move_collects_item_and_spends_energy(self) -> None:
+        game = Game(
+            [
+                "#####",
+                "#P F#",
+                "#####",
+            ],
+            initial_energy=3,
+        )
+
+        first_move = game.move_player(0, 1)
+        second_move = game.move_player(0, 1)
+
+        self.assertTrue(first_move.moved)
+        self.assertIsNone(first_move.collected_item)
+        self.assertTrue(second_move.moved)
+        self.assertIsNotNone(second_move.collected_item)
+        self.assertEqual(second_move.collected_item.symbol, "F")
+        self.assertEqual(game.score, 50)
+        self.assertEqual(game.energy_left, 1)
+
+    def test_manual_move_does_not_cross_walls(self) -> None:
+        game = Game(
+            [
+                "#####",
+                "#P F#",
+                "#####",
+            ],
+            initial_energy=3,
+        )
+
+        result = game.move_player(-1, 0)
+
+        self.assertFalse(result.moved)
+        self.assertEqual(game.position, game.grid.start)
+        self.assertEqual(game.energy_left, 3)
 
 if __name__ == "__main__":
     unittest.main()

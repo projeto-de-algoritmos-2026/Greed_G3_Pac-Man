@@ -1,6 +1,6 @@
 from src.greedy import build_candidates, choose_best_candidate
 from src.grid import Grid
-from src.models import Position, StepResult
+from src.models import Candidate, ManualMoveResult, Position, StepResult
 
 
 class Game:
@@ -13,14 +13,19 @@ class Game:
         self.remaining_items = dict(self.grid.items)
         self.history: list[StepResult] = []
 
-    def step(self) -> StepResult | None:
-        candidates = build_candidates(
+    def candidates(self) -> list[Candidate]:
+        return build_candidates(
             self.grid,
             self.position,
             self.remaining_items,
             self.energy_left,
         )
-        best = choose_best_candidate(candidates)
+    
+    def best_candidate(self) -> Candidate | None:
+        return choose_best_candidate(self.candidates())
+
+    def step(self) -> StepResult | None:
+        best = self.best_candidate()
 
         if best is None:
             return None
@@ -40,6 +45,34 @@ class Game:
         )
         self.history.append(result)
         return result
+
+    def move_player(self, row_delta: int, col_delta: int) -> ManualMoveResult:
+        if self.energy_left <= 0:
+            return ManualMoveResult(False, self.position, self.energy_left, self.score)
+
+        row, col = self.position
+        next_position = (row + row_delta, col + col_delta)
+
+        if not self.grid.is_walkable(next_position):
+            return ManualMoveResult(False, self.position, self.energy_left, self.score)
+
+        self.position = next_position
+        self.energy_left -= 1
+        collected_item = self.remaining_items.pop(self.position, None)
+
+        if collected_item is not None:
+            self.score += collected_item.value
+
+        return ManualMoveResult(
+            True,
+            self.position,
+            self.energy_left,
+            self.score,
+            collected_item,
+        )
+
+    def is_finished(self) -> bool:
+        return self.energy_left <= 0 or self.best_candidate() is None
 
     def solve(self) -> list[StepResult]:
         while self.step() is not None:
