@@ -30,11 +30,17 @@ class Game:
         if best is None:
             return None
 
-        self.energy_left -= best.cost
-        self.score += best.item.value
-        self.position = best.item.position
-        self.remaining_items.pop(best.item.position)
+        collected_items = []
+        for item in best.path_items:
+            collected_item = self.remaining_items.pop(item.position, None)
+            if collected_item is not None:
+                collected_items.append(collected_item)
 
+        value_gained = sum(item.value for item in collected_items)
+        self.energy_left -= best.cost
+        self.score += value_gained
+        self.position = best.item.position
+        
         result = StepResult(
             item=best.item,
             path=best.path,
@@ -42,6 +48,8 @@ class Game:
             energy_left=self.energy_left,
             score=self.score,
             ratio=best.ratio,
+            collected_items=collected_items,
+            value_gained=value_gained,
         )
         self.history.append(result)
         return result
@@ -96,9 +104,12 @@ class Game:
                 break
 
             print(f"Rodada {round_number}")
+            collected = ", ".join(
+                f"{item.name} ({item.symbol})" for item in result.collected_items
+            )
             print(
-                f"Coletado: {result.item.name} ({result.item.symbol}) | "
-                f"valor={result.item.value} | custo={result.cost} | "
+                f"Coletado(s): {collected} | "
+                f"valor={result.value_gained} | custo={result.cost} | "
                 f"valor/custo={result.ratio:.2f}"
             )
             print(f"Pontuação: {result.score} | Energia restante: {result.energy_left}")
@@ -111,7 +122,8 @@ class Game:
         print(f"Pontuação total: {self.score}")
         print(f"Energia usada: {self.initial_energy - self.energy_left}")
         print(f"Energia restante: {self.energy_left}")
-        print(f"Itens coletados: {len(self.history)}")
+        collected_count = sum(len(result.collected_items) for result in self.history)
+        print(f"Itens coletados: {collected_count}")
         print(f"Itens ignorados: {len(self.remaining_items)}")
 
         if not self.remaining_items:

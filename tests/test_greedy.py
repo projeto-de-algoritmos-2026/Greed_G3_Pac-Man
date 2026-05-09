@@ -99,5 +99,23 @@ class GreedyKnapsackTest(unittest.TestCase):
         self.assertEqual(len(game.remaining_items), 0)
         self.assertGreaterEqual(game.energy_left, 0)
     
+    def test_automatic_step_collects_items_found_on_path(self) -> None:
+        game = Game(
+            [
+                "#####",
+                "#P.O#",
+                "#####",
+            ],
+            initial_energy=5,
+        )
+
+        result = game.step()
+
+        self.assertIsNotNone(result)
+        self.assertEqual(result.value_gained, 40)
+        self.assertEqual(len(result.collected_items), 2)
+        self.assertEqual(game.score, 40)
+        self.assertEqual(len(game.remaining_items), 0)
+        
 if __name__ == "__main__":
     unittest.main()

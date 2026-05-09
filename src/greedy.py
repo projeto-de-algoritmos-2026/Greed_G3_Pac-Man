@@ -17,7 +17,17 @@ def build_candidates(
 
         cost = len(path) - 1
         if cost <= energy_left:
-            candidates.append(Candidate(item=item, path=path, cost=cost))
+            path_items = [items[position] for position in path[1:] if position in items]
+            value = sum(path_item.value for path_item in path_items)
+            candidates.append(
+                Candidate(
+                    item=item,
+                    path=path,
+                    cost=cost,
+                    path_items=path_items,
+                    value=value,
+                )
+            )
 
     return candidates
 
@@ -30,7 +40,7 @@ def choose_best_candidate(candidates: list[Candidate]) -> Candidate | None:
         candidates,
         key=lambda candidate: (
             candidate.ratio,
-            candidate.item.value,
+            candidate.value,
             -candidate.cost,
             candidate.item.name,
         ),

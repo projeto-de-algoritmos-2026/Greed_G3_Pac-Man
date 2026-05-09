@@ -296,8 +296,9 @@ class PacManApp:
         self.root.after(650, self.auto_loop)
 
     def _auto_message(self, result: StepResult) -> str:
+        collected = ", ".join(item.name for item in result.collected_items)
         return (
-            f"Automático coletou {result.item.name}: valor={result.item.value}, "
+            f"Automático coletou {collected}: valor={result.value_gained}, "
             f"custo={result.cost}, razão={result.ratio:.2f}."
         )
 
@@ -384,7 +385,7 @@ class PacManApp:
                 f"Pontuação: {self.game.score}\n"
                 f"Energia: {self.game.energy_left}/{self.game.initial_energy}\n"
                 f"Itens restantes: {len(self.game.remaining_items)}\n"
-                f"Coletas automáticas: {len(self.game.history)}"
+                f"Passes automáticos: {len(self.game.history)}"
             )
         )
 
@@ -399,7 +400,7 @@ class PacManApp:
         return (
             "Melhor escolha gulosa\n"
             f"{candidate.item.name} ({candidate.item.symbol})\n"
-            f"valor={candidate.item.value} | custo={candidate.cost}\n"
+            f"valor da rota={candidate.value} | custo={candidate.cost}\n"
             f"valor/custo={candidate.ratio:.2f}"
         )
 

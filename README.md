@@ -16,7 +16,8 @@ No jogo, o Pac-Man possui uma quantidade limitada de energia e precisa decidir q
 O projeto possui dois modos de uso:
 * **Modo manual:** o jogador controla o Pac-Man com as setas ou teclas WASD.
 * **Modo automático:** o algoritmo guloso escolhe os itens com maior razão `valor / custo`.
-A energia inicial foi balanceada para `95`, permitindo que o modo automático consiga coletar todos os itens do mapa e finalizar a simulação com vitória.
+
+A energia inicial foi balanceada para `75`, permitindo que o modo automático consiga coletar todos os itens do mapa, mas sem sobrar energia demais.
 
 Na modelagem do problema:
 * **Jogador:** representa o Pac-Man, indicado por `P`.
@@ -105,9 +106,11 @@ Ao executar o projeto, a simulação mostra o mapa inicial e inicia as rodadas d
 
 Em cada rodada, o algoritmo:
 * Calcula o custo para alcançar cada item disponível.
-* Calcula a razão `valor / custo`.
+* Soma o valor dos itens encontrados na rota até o destino.
+* Calcula a razão `valor / custo` da rota.
 * Escolhe o item com melhor custo-benefício.
 * Move o Pac-Man até o item.
+* Coleta todos os itens encontrados no caminho.
 * Atualiza energia e pontuação.
 
 Exemplo de execução:

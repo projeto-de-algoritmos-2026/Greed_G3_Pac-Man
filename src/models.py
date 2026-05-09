@@ -17,12 +17,14 @@ class Candidate:
     item: Item
     path: list[Position]
     cost: int
+    path_items: list[Item]
+    value: int
 
     @property
     def ratio(self) -> float:
         if self.cost == 0:
             return float("inf")
-        return self.item.value / self.cost
+        return self.value / self.cost
 
 
 @dataclass
@@ -33,7 +35,8 @@ class StepResult:
     energy_left: int
     score: int
     ratio: float
-
+    collected_items: list[Item]
+    value_gained: int
 
 @dataclass
 class ManualMoveResult:
