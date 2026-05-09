@@ -37,6 +37,7 @@ class StepResult:
     ratio: float
     collected_items: list[Item]
     value_gained: int
+    combo_bonus: int
 
 @dataclass
 class ManualMoveResult:
@@ -45,3 +46,21 @@ class ManualMoveResult:
     energy_left: int
     score: int
     collected_item: Item | None = None
+
+    combo_bonus: int = 0
+
+
+@dataclass(frozen=True)
+class PlannedStep:
+    target: Item
+    path: list[Position]
+    collected_items: list[Item]
+    value_gained: int
+    cost: int
+    energy_after: int
+
+
+@dataclass(frozen=True)
+class OptimalPlan:
+    score: int
+    steps: list[PlannedStep]

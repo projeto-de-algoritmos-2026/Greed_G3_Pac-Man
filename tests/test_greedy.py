@@ -116,6 +116,16 @@ class GreedyKnapsackTest(unittest.TestCase):
         self.assertEqual(len(result.collected_items), 2)
         self.assertEqual(game.score, 40)
         self.assertEqual(len(game.remaining_items), 0)
-        
+    
+    def test_best_score_plan_beats_greedy_score(self) -> None:
+        greedy_game = Game(DEFAULT_MAP, DEFAULT_ENERGY)
+        greedy_game.solve()
+
+        best_score_game = Game(DEFAULT_MAP, DEFAULT_ENERGY)
+        best_score_game.run_best_score_plan()
+
+        self.assertGreater(best_score_game.final_score(), greedy_game.final_score())
+        self.assertEqual(best_score_game.final_score(), 610)
+
 if __name__ == "__main__":
     unittest.main()

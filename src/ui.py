@@ -156,6 +156,15 @@ class PacManApp:
         )
         self.auto_play_button.pack(fill="x", pady=3)
 
+        self.best_score_button = tk.Button(
+            button_frame,
+            text="Maior pontuação",
+            command=self.run_best_score_plan,
+            font=self.body_font,
+            relief="flat",
+        )
+        self.best_score_button.pack(fill="x", pady=3)
+
         self.reset_button = tk.Button(
             button_frame,
             text="Resetar",
@@ -235,9 +244,10 @@ class PacManApp:
         if result.collected_item is None:
             return "Movimento realizado. Nenhum item coletado nesta célula."
 
+        combo = f" Combo de fruta: +{result.combo_bonus}." if result.combo_bonus else ""
         return (
             f"Coletado manualmente: {result.collected_item.name} "
-            f"(+{result.collected_item.value} pontos)."
+            f"(+{result.collected_item.value} pontos).{combo}"
         )
 
     def set_manual_mode(self) -> None:
@@ -277,6 +287,25 @@ class PacManApp:
         if self.auto_running:
             self.root.after(650, self.auto_loop)
 
+    def run_best_score_plan(self) -> None:
+        if self.auto_running:
+            self.auto_running = False
+            self.auto_play_button.configure(text="Jogo automático")
+
+        self.mode = "Maior pontuação"
+        plan = self.game.run_best_score_plan()
+        self.last_path = plan.steps[-1].path if plan.steps else []
+
+        if not plan.steps and self.game.remaining_items:
+            self.message = "Nenhuma rota de otimização cabe na energia atual."
+        else:
+            self.message = (
+                f"Busca concluída. Pontuação final: {self.game.final_score()} "
+                f"em {len(plan.steps)} passe(s)."
+            )
+
+        self.render()
+
     def auto_loop(self) -> None:
         if not self.auto_running:
             return
@@ -297,9 +326,10 @@ class PacManApp:
 
     def _auto_message(self, result: StepResult) -> str:
         collected = ", ".join(item.name for item in result.collected_items)
+        combo = f" Combo de frutas: +{result.combo_bonus}." if result.combo_bonus else ""
         return (
             f"Automático coletou {collected}: valor={result.value_gained}, "
-            f"custo={result.cost}, razão={result.ratio:.2f}."
+            f"custo={result.cost}, razão={result.ratio:.2f}.{combo}"
         )
 
      def _finished_message(self) -> str:
@@ -382,7 +412,9 @@ class PacManApp:
         self.status_label.configure(
             text=(
                 f"Modo: {self.mode}\n"
-                f"Pontuação: {self.game.score}\n"
+                f"Pontos: {self.game.score}\n"
+                f"Bônus vitória: {self.game.victory_bonus()}\n"
+                f"Pontuação final: {self.game.final_score()}\n"
                 f"Energia: {self.game.energy_left}/{self.game.initial_energy}\n"
                 f"Itens restantes: {len(self.game.remaining_items)}\n"
                 f"Passes automáticos: {len(self.game.history)}"
