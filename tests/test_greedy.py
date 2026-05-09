@@ -1,9 +1,10 @@
 import unittest
 
+from src.config import DEFAULT_ENERGY
 from src.game import Game
 from src.greedy import build_candidates, choose_best_candidate
 from src.grid import Grid
-
+from src.maps import DEFAULT_MAP
 
 class GreedyKnapsackTest(unittest.TestCase):
     def test_shortest_path_uses_grid_corridors(self) -> None:
@@ -90,5 +91,13 @@ class GreedyKnapsackTest(unittest.TestCase):
         self.assertEqual(game.position, game.grid.start)
         self.assertEqual(game.energy_left, 3)
 
+    def test_default_balance_allows_greedy_victory(self) -> None:
+        game = Game(DEFAULT_MAP, DEFAULT_ENERGY)
+
+        game.solve()
+
+        self.assertEqual(len(game.remaining_items), 0)
+        self.assertGreaterEqual(game.energy_left, 0)
+    
 if __name__ == "__main__":
     unittest.main()

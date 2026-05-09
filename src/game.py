@@ -114,6 +114,9 @@ class Game:
         print(f"Itens coletados: {len(self.history)}")
         print(f"Itens ignorados: {len(self.remaining_items)}")
 
+        if not self.remaining_items:
+            print("Vitória: todos os itens foram coletados.")
+
         if self.remaining_items:
             print()
             print("Itens não coletados:")

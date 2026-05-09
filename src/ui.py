@@ -3,6 +3,7 @@ from __future__ import annotations
 import tkinter as tk
 from tkinter import font
 
+from src.config import DEFAULT_ENERGY
 from src.game import Game
 from src.maps import DEFAULT_MAP
 from src.models import Candidate, ManualMoveResult, Position, StepResult
@@ -12,7 +13,6 @@ CELL_SIZE = 42
 PANEL_WIDTH = 310
 TOP_PADDING = 12
 SIDE_PADDING = 12
-INITIAL_ENERGY = 35
 
 COLORS = {
     "background": "#101820",
@@ -50,7 +50,7 @@ ITEM_LABELS = {
 class PacManApp:
     def __init__(self, root: tk.Tk) -> None:
         self.root = root
-        self.game = Game(DEFAULT_MAP, INITIAL_ENERGY)
+        self.game = Game(DEFAULT_MAP, DEFAULT_ENERGY)
         self.mode = "Manual"
         self.auto_running = False
         self.last_path: list[Position] = []
@@ -140,7 +140,7 @@ class PacManApp:
 
         self.auto_step_button = tk.Button(
             button_frame,
-            text="Auto step",
+            text="Passe automático",
             command=self.auto_step,
             font=self.body_font,
             relief="flat",
@@ -149,7 +149,7 @@ class PacManApp:
 
         self.auto_play_button = tk.Button(
             button_frame,
-            text="Auto play",
+            text="Jogo automático",
             command=self.toggle_auto_play,
             font=self.body_font,
             relief="flat",
@@ -182,7 +182,7 @@ class PacManApp:
             "O  power-up\n"
             "F  fruta\n"
             "C  cereja\n"
-            "*  rota do auto"
+            "*  rota automática"
         )
         tk.Label(
             self.panel,
@@ -223,7 +223,7 @@ class PacManApp:
         self.mode = "Manual"
         self.last_path = []
         result = self.game.move_player(*delta)
-        self.message = self._manual_message(result)
+        self.message = self._finished_message() if not self.game.remaining_items else self._manual_message(result)
         self.render()
 
     def _manual_message(self, result: ManualMoveResult) -> str:
@@ -254,18 +254,24 @@ class PacManApp:
 
         if result is None:
             self.last_path = []
-            self.message = "Nenhum item restante cabe na energia disponível."
+            self.message = self._finished_message()
         else:
             self.last_path = result.path
-            self.message = self._auto_message(result)
+            self.message = self._finished_message() if not self.game.remaining_items else self._auto_message(result)
 
         self.render()
 
     def toggle_auto_play(self) -> None:
         self.auto_running = not self.auto_running
         self.mode = "Automático"
-        self.auto_play_button.configure(text="Pausar auto" if self.auto_running else "Auto play")
-        self.message = "Auto play em execução." if self.auto_running else "Auto play pausado."
+        self.auto_play_button.configure(
+            text="Pausar automático" if self.auto_running else "Jogo automático"
+        )
+        self.message = (
+            "Jogo automático em execução."
+            if self.auto_running
+            else "Jogo automático pausado."
+        )
         self.render()
 
         if self.auto_running:
@@ -278,27 +284,32 @@ class PacManApp:
         result = self.game.step()
         if result is None:
             self.auto_running = False
-            self.auto_play_button.configure(text="Auto play")
-            self.message = "Auto play finalizado: não há item possível com a energia atual."
+            self.auto_play_button.configure(text="Jogo automático")
+            self.message = self._finished_message()
             self.last_path = []
             self.render()
             return
 
         self.last_path = result.path
-        self.message = self._auto_message(result)
+        self.message = self._finished_message() if not self.game.remaining_items else self._auto_message(result)
         self.render()
         self.root.after(650, self.auto_loop)
 
     def _auto_message(self, result: StepResult) -> str:
         return (
-            f"Auto coletou {result.item.name}: valor={result.item.value}, "
+            f"Automático coletou {result.item.name}: valor={result.item.value}, "
             f"custo={result.cost}, razão={result.ratio:.2f}."
         )
 
+     def _finished_message(self) -> str:
+        if not self.game.remaining_items:
+            return "Vitória! Todos os itens foram coletados."
+        return "Fim de jogo: nenhum item restante cabe na energia disponível."
+    
     def reset(self) -> None:
         self.auto_running = False
-        self.auto_play_button.configure(text="Auto play")
-        self.game = Game(DEFAULT_MAP, INITIAL_ENERGY)
+        self.auto_play_button.configure(text="Jogo automático")
+        self.game = Game(DEFAULT_MAP, DEFAULT_ENERGY)
         self.mode = "Manual"
         self.last_path = []
         self.message = "Jogo resetado. Use setas/WASD ou rode o modo automático."

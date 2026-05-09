@@ -16,6 +16,7 @@ No jogo, o Pac-Man possui uma quantidade limitada de energia e precisa decidir q
 O projeto possui dois modos de uso:
 * **Modo manual:** o jogador controla o Pac-Man com as setas ou teclas WASD.
 * **Modo automático:** o algoritmo guloso escolhe os itens com maior razão `valor / custo`.
+A energia inicial foi balanceada para `95`, permitindo que o modo automático consiga coletar todos os itens do mapa e finalizar a simulação com vitória.
 
 Na modelagem do problema:
 * **Jogador:** representa o Pac-Man, indicado por `P`.
@@ -48,7 +49,7 @@ Embora o custo seja obtido a partir de caminhos no grid, o foco do trabalho é a
 | `C` | Cereja | 80 |
 
 ## Funcionalidades
-* Representação do mapa em terminal.
+* Representação do mapa em interface gráfica.
 * Energia limitada para o jogador.
 * Cálculo do custo de deslocamento até cada item.
 * Seleção gulosa por maior razão `valor / custo`.
@@ -58,7 +59,7 @@ Embora o custo seja obtido a partir de caminhos no grid, o foco do trabalho é a
 * Testes unitários para validação da lógica principal.
 * Interface gráfica com mapa colorido, painel de status e controles de execução.
 * Modo manual controlado por setas ou WASD.
-* Modo automático com execução passo a passo ou contínua.
+* Modo automático com execução por passe ou contínua.
 
 ## Vídeo
 

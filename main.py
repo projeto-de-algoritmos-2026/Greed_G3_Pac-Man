@@ -1,9 +1,9 @@
 import argparse
 
+from src.config import DEFAULT_ENERGY
 from src.game import Game
 from src.maps import DEFAULT_MAP
 from src.ui import run_gui
-
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Pac-Man com estratégia gulosa Knapsack.")
@@ -15,7 +15,7 @@ def main() -> None:
     args = parser.parse_args()
 
     if args.terminal:
-        game = Game(DEFAULT_MAP, initial_energy=35)
+        game = Game(DEFAULT_MAP, initial_energy=DEFAULT_ENERGY)
         game.run()
     else:
         run_gui()
