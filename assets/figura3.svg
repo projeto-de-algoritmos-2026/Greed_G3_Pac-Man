@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="560" viewBox="0 0 980 560">
+  <rect width="980" height="560" fill="#101820"/>
+  <rect x="28" y="28" width="630" height="462" fill="#0f1720" stroke="#1f2a36" stroke-width="2"/>
+  <rect x="682" y="28" width="270" height="462" fill="#18212c"/>
+  <text x="704" y="70" fill="#f8f8f2" font-family="Segoe UI, Arial" font-size="24" font-weight="700">Resultado</text>
+  <text x="704" y="124" fill="#7bd88f" font-family="Segoe UI, Arial" font-size="18">Vitória: todos coletados</text>
+  <text x="704" y="158" fill="#f8f8f2" font-family="Segoe UI, Arial" font-size="16">Pontuação final: 610</text>
+  <text x="704" y="190" fill="#f8f8f2" font-family="Segoe UI, Arial" font-size="16">Energia usada: 48</text>
+  <text x="704" y="222" fill="#f8f8f2" font-family="Segoe UI, Arial" font-size="16">Energia restante: 27</text>
+  <text x="704" y="254" fill="#ffcc66" font-family="Segoe UI, Arial" font-size="16">Itens ignorados: 0</text>
+  <text x="704" y="322" fill="#b8c2cc" font-family="Segoe UI, Arial" font-size="15">O modo manual permite</text>
+  <text x="704" y="348" fill="#b8c2cc" font-family="Segoe UI, Arial" font-size="15">comparar a decisão humana</text>
+  <text x="704" y="374" fill="#b8c2cc" font-family="Segoe UI, Arial" font-size="15">com a decisão gulosa.</text>
+  <g transform="translate(28 28)">
+    <rect x="0" y="0" width="630" height="462" fill="#0f1720"/>
+    <g fill="#214f93">
+      <rect x="0" y="0" width="630" height="42"/><rect x="0" y="420" width="630" height="42"/>
+      <rect x="0" y="0" width="42" height="462"/><rect x="588" y="0" width="42" height="462"/>
+      <rect x="168" y="42" width="42" height="42"/><rect x="84" y="84" width="42" height="42"/>
+      <rect x="168" y="84" width="42" height="42"/><rect x="294" y="84" width="126" height="42"/>
+      <rect x="462" y="84" width="126" height="42"/><rect x="84" y="126" width="42" height="42"/>
+      <rect x="252" y="126" width="42" height="42"/><rect x="420" y="126" width="42" height="42"/>
+      <rect x="84" y="168" width="126" height="42"/><rect x="252" y="168" width="42" height="42"/>
+      <rect x="336" y="168" width="42" height="42"/><rect x="420" y="168" width="42" height="42"/>
+      <rect x="504" y="168" width="42" height="42"/>
+    </g>
+    <circle cx="147" cy="231" r="16" fill="#ffd43b"/>
+    <polygon points="147,231 166,222 166,240" fill="#0f1720"/>
+    <circle cx="147" cy="63" r="4" fill="#f8f8f2"/>
+    <circle cx="357" cy="63" r="14" fill="#ff5c8a"/>
+    <text x="352" y="69" fill="#101820" font-family="Consolas" font-size="16" font-weight="700">F</text>
+    <circle cx="399" cy="231" r="4" fill="#f8f8f2"/>
+    <circle cx="189" cy="399" r="4" fill="#f8f8f2"/>
+  </g>
+</svg>

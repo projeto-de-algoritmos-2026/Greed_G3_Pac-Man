@@ -1,0 +1,142 @@
+import unittest
+
+from src.config import DEFAULT_ENERGY
+from src.game import Game
+from src.greedy import build_candidates, choose_best_candidate
+from src.grid import Grid
+from src.maps import DEFAULT_MAP
+
+
+class GreedyKnapsackTest(unittest.TestCase):
+    def test_shortest_path_uses_grid_corridors(self) -> None:
+        grid = Grid(
+            [
+                "#####",
+                "#P  #",
+                "### #",
+                "# F #",
+                "#####",
+            ]
+        )
+
+        path = grid.shortest_path(grid.start, (3, 2))
+
+        self.assertIsNotNone(path)
+        self.assertEqual(len(path) - 1, 5)
+
+    def test_choose_best_candidate_by_value_cost_ratio(self) -> None:
+        grid = Grid(
+            [
+                "#######",
+                "#P F O#",
+                "#######",
+            ]
+        )
+        candidates = build_candidates(grid, grid.start, grid.items, energy_left=10)
+
+        best = choose_best_candidate(candidates)
+
+        self.assertIsNotNone(best)
+        self.assertEqual(best.item.symbol, "F")
+
+    def test_game_stops_when_remaining_items_do_not_fit_energy(self) -> None:
+        game = Game(
+            [
+                "#######",
+                "#P   F#",
+                "#######",
+            ],
+            initial_energy=2,
+        )
+
+        history = game.solve()
+
+        self.assertEqual(history, [])
+        self.assertEqual(game.score, 0)
+        self.assertEqual(len(game.remaining_items), 1)
+
+    def test_manual_move_collects_item_and_spends_energy(self) -> None:
+        game = Game(
+            [
+                "#####",
+                "#P F#",
+                "#####",
+            ],
+            initial_energy=3,
+        )
+
+        first_move = game.move_player(0, 1)
+        second_move = game.move_player(0, 1)
+
+        self.assertTrue(first_move.moved)
+        self.assertIsNone(first_move.collected_item)
+        self.assertTrue(second_move.moved)
+        self.assertIsNotNone(second_move.collected_item)
+        self.assertEqual(second_move.collected_item.symbol, "F")
+        self.assertEqual(game.score, 50)
+        self.assertEqual(game.energy_left, 1)
+
+    def test_manual_move_does_not_cross_walls(self) -> None:
+        game = Game(
+            [
+                "#####",
+                "#P F#",
+                "#####",
+            ],
+            initial_energy=3,
+        )
+
+        result = game.move_player(-1, 0)
+
+        self.assertFalse(result.moved)
+        self.assertEqual(game.position, game.grid.start)
+        self.assertEqual(game.energy_left, 3)
+
+    def test_default_balance_allows_greedy_victory(self) -> None:
+        game = Game(DEFAULT_MAP, DEFAULT_ENERGY)
+
+        game.solve()
+
+        self.assertEqual(len(game.remaining_items), 0)
+        self.assertGreaterEqual(game.energy_left, 0)
+
+    def test_automatic_step_collects_items_found_on_path(self) -> None:
+        game = Game(
+            [
+                "#####",
+                "#P.O#",
+                "#####",
+            ],
+            initial_energy=5,
+        )
+
+        result = game.step()
+
+        self.assertIsNotNone(result)
+        self.assertEqual(result.value_gained, 40)
+        self.assertEqual(len(result.collected_items), 2)
+        self.assertEqual(game.score, 40)
+        self.assertEqual(len(game.remaining_items), 0)
+
+    def test_best_score_plan_beats_greedy_score(self) -> None:
+        greedy_game = Game(DEFAULT_MAP, DEFAULT_ENERGY)
+        greedy_game.solve()
+
+        best_score_game = Game(DEFAULT_MAP, DEFAULT_ENERGY)
+        best_score_game.run_best_score_plan()
+
+        self.assertGreater(best_score_game.final_score(), greedy_game.final_score())
+        self.assertEqual(best_score_game.final_score(), 610)
+
+    def test_automatic_steps_follow_best_score_route(self) -> None:
+        game = Game(DEFAULT_MAP, DEFAULT_ENERGY)
+
+        while game.step_best_score() is not None:
+            pass
+
+        self.assertEqual(game.final_score(), 610)
+        self.assertEqual(game.energy_left, 27)
+
+
+if __name__ == "__main__":
+    unittest.main()
