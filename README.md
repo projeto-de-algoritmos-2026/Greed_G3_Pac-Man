@@ -86,7 +86,7 @@ O passe automático usa uma busca por rotas com memorização para encontrar a m
 
 ## Vídeo
 
-Segue o vídeo feito pela dupla: [Link](Link)
+Segue o vídeo feito pela dupla: [Link](https://youtu.be/kuX2gFH7hlg)
 
 ## Screenshots
 
